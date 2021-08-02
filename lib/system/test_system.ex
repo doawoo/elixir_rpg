@@ -1,13 +1,21 @@
 use ElixirRPG.DSL.System
 
-defsystem TestSystem do
+defsystem TestPoisonSystem do
+  alias ElixirRPG.Component.ActorStats
 
-  name "A Simple Testing System"
+  name("Poison Effect")
 
-  wants :player_stats
-  wants :input
+  wants(ActorStats)
+  wants(Poison)
 
   on_tick do
-    IO.inspect("tick")
+    # Fetch the current state of the component data
+    dmg_amount = get_component_data(ActorStats, :dmg_per_tick)
+    duration = get_component_data(Poison, :duration)
+    current_hp = get_component_data(ActorStats, :hp)
+
+    # Now modify them
+    set_component_data(ActorStats, :hp, current_hp - dmg_amount)
+    set_component_data(Poison, :duration, duration - 1)
   end
 end

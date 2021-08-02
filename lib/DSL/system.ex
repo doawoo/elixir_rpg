@@ -11,6 +11,12 @@ defmodule ElixirRPG.DSL.System do
         Module.register_attribute(__MODULE__, :wants, accumulate: true, persist: true)
         Module.register_attribute(__MODULE__, :system_name, persist: true)
 
+        defp get_component_data(component_type, key) do
+        end
+
+        defp set_component_data(component_tupe, key, new_value) do
+        end
+
         unquote(block)
 
         def wants do
