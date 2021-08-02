@@ -1,7 +1,8 @@
 use ElixirRPG.DSL.System
 
 defsystem TestPoisonSystem do
-  alias ElixirRPG.Component.ActorStats
+  alias ElixirRPG.ComponentTypes.ActorStats
+  alias ElixirRPG.ComponentTypes.Poison
 
   name("Poison Effect")
 
