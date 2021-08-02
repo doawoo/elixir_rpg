@@ -16,7 +16,7 @@ defmodule ElixirRPG.DSL.System do
         defp __get_component_data(entity_pid, component_type, key) do
           case GenServer.call(entity_pid, {:get_component, component_type}) do
             {:ok, component} ->
-              get_in(component, key)
+              get_in(component, [Access.key!(key)])
 
             _ ->
               nil
@@ -25,6 +25,14 @@ defmodule ElixirRPG.DSL.System do
 
         defp __set_component_data(entity_pid, component_type, key, new_value) do
           GenServer.call(entity_pid, {:set_component_member, component_type, key, new_value})
+        end
+
+        defp __add_component(entity_pid, component_type, default_data) do
+          GenServer.call(entity_pid, {:add_component, component_type, default_data})
+        end
+
+        defp __remove_component(entity_pid, component_type) do
+          GenServer.call(entity_pid, {:remove_component, component_type})
         end
 
         unquote(block)
@@ -49,6 +57,18 @@ defmodule ElixirRPG.DSL.System do
   defmacro set_component_data(component_type, key, new_data) do
     quote do
       __set_component_data(var!(entity), unquote(component_type), unquote(key), unquote(new_data))
+    end
+  end
+
+  defmacro add_component(component_type) do
+    quote do
+      __add_component(var!(entity), unquote(component_type))
+    end
+  end
+
+  defmacro remove_component(component_type) do
+    quote do
+      __remove_component(var!(entity), unquote(component_type))
     end
   end
 
