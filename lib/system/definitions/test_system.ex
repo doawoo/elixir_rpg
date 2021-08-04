@@ -4,10 +4,10 @@ defsystem TestPoisonSystem do
   alias ElixirRPG.ComponentTypes.ActorStats
   alias ElixirRPG.ComponentTypes.Poison
 
-  name("Poison Effect")
+  name "Poison Effect"
 
-  wants(ActorStats)
-  wants(Poison)
+  wants ActorStats
+  wants Poison
 
   on_tick do
     # Fetch the current state of the component data
