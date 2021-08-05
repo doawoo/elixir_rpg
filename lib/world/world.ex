@@ -2,8 +2,9 @@ defmodule ElixirRPG.World do
   use GenServer
 
   alias ElixirRPG.World
+  alias ElixirRPG.Entity
 
-  @initial_state %World.Data{target_tick_rate: 60}
+  @initial_state %World.Data{target_tick_rate: 15}
 
   def start_link(name, proc_name) when is_binary(name) and is_atom(proc_name) do
     GenServer.start_link(__MODULE__, [name: name], name: proc_name)
@@ -34,9 +35,12 @@ defmodule ElixirRPG.World do
     {:noreply, current_state}
   end
 
+  def handle_cast({:add_system, system}, current_state) do
+    {:noreply, %World.Data{current_state | systems: [system | current_state.systems]}}
+  end
+
   @impl GenServer
   def handle_info(:tick, current_state) do
-    # Enum.each(current_state.children, fn pid -> GenServer.cast(pid, :tick) end)
     {:noreply, current_state}
   end
 

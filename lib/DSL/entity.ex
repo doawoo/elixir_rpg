@@ -16,7 +16,8 @@ defmodule ElixirRPG.DSL.Entity do
         unquote(block)
 
         defp __build_component(type, default_data) do
-          struct(type, default_data)
+          full_type = Module.concat(ElixirRPG.ComponentTypes, type)
+          struct(full_type, default_data)
         end
 
         def create do

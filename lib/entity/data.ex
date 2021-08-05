@@ -3,6 +3,7 @@ defmodule ElixirRPG.Entity.Data do
 
   typedstruct do
     field :name, String.t(), default: "untitled_entity"
+    field :world_ref, pid(), default: nil
     field :components, Map.t(), default: %{}
   end
 end
