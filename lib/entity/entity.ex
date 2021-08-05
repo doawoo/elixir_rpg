@@ -17,6 +17,7 @@ defmodule ElixirRPG.Entity do
 
   @impl GenServer
   def init(data: entity_data) do
+    Enum.each(entity_data.components, fn {k, _} -> register_with_component_group(k) end)
     {:ok, entity_data}
   end
 
@@ -25,10 +26,12 @@ defmodule ElixirRPG.Entity do
       when is_atom(type) and is_map(data) do
     full_type = Module.concat(ElixirRPG.ComponentTypes, type)
 
-    if Map.has_key?(entity_data.components, full_type) do
+    if Map.has_key?(entity_data.components, type) do
       {:reply, :error, entity_data}
     else
       new_component = struct(full_type, data)
+
+      register_with_component_group(type)
 
       {:reply, :ok,
        %Entity.Data{
@@ -39,6 +42,8 @@ defmodule ElixirRPG.Entity do
   end
 
   def handle_call({:remove_component, type}, _from, entity_data) when is_atom(type) do
+    unregister_with_component_group(type)
+
     {:reply, :ok,
      %Entity.Data{entity_data | components: Map.delete(entity_data.components, type)}}
   end
@@ -63,5 +68,13 @@ defmodule ElixirRPG.Entity do
     )
 
     {:reply, :ok, entity_data}
+  end
+
+  defp register_with_component_group(type) do
+    :pg2.join(type, self())
+  end
+
+  defp unregister_with_component_group(type) do
+    :pg2.leave(type, self())
   end
 end
