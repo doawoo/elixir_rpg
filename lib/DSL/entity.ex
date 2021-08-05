@@ -42,7 +42,13 @@ defmodule ElixirRPG.DSL.Entity do
     end
   end
 
-  defmacro component(component_type, default_data \\ %{}) do
+  defmacro component(component_type) do
+    quote do
+      @components {unquote(component_type), %{}}
+    end
+  end
+
+  defmacro component(component_type, default_data) do
     quote do
       @components {unquote(component_type), unquote(default_data)}
     end
