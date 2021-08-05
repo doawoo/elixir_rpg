@@ -10,6 +10,6 @@ defentity Flan do
     strength: 23
   }
 
-  copmonent NPCBrain
+  component NPCBrain
   component ActiveBattle
 end
