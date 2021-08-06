@@ -4,6 +4,7 @@ defmodule ElixirRPG.Entity do
   require Logger
 
   alias ElixirRPG.Entity
+  alias ElixirRPG.Entity.EntityStore
 
   def create_entity(type) when is_atom(type) do
     full_type = Module.concat(ElixirRPG.EntityTypes, type)
@@ -71,10 +72,10 @@ defmodule ElixirRPG.Entity do
   end
 
   defp register_with_component_group(type) do
-    :pg2.join(type, self())
+    EntityStore.add_entity_to_group(type, self())
   end
 
   defp unregister_with_component_group(type) do
-    :pg2.leave(type, self())
+    EntityStore.remove_entity_from_group(type, self())
   end
 end
