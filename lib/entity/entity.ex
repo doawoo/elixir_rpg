@@ -6,9 +6,10 @@ defmodule ElixirRPG.Entity do
   alias ElixirRPG.Entity
   alias ElixirRPG.Entity.EntityStore
 
-  def create_entity(type) when is_atom(type) do
+  def create_entity(type, world_name) when is_atom(type) do
     full_type = Module.concat(ElixirRPG.EntityTypes, type)
     data = full_type.create()
+    data = %Entity.Data{data | world_name: world_name}
     start_link(data)
   end
 
@@ -18,7 +19,10 @@ defmodule ElixirRPG.Entity do
 
   @impl GenServer
   def init(data: entity_data) do
-    Enum.each(entity_data.components, fn {k, _} -> register_with_component_group(k) end)
+    Enum.each(entity_data.components, fn {k, _} ->
+      register_with_component_group(k, entity_data.world_name)
+    end)
+
     {:ok, entity_data}
   end
 
@@ -32,7 +36,7 @@ defmodule ElixirRPG.Entity do
     else
       new_component = struct(full_type, data)
 
-      register_with_component_group(type)
+      register_with_component_group(type, entity_data.world_name)
 
       {:reply, :ok,
        %Entity.Data{
@@ -43,7 +47,7 @@ defmodule ElixirRPG.Entity do
   end
 
   def handle_call({:remove_component, type}, _from, entity_data) when is_atom(type) do
-    unregister_with_component_group(type)
+    unregister_with_component_group(type, entity_data.world_name)
 
     {:reply, :ok,
      %Entity.Data{entity_data | components: Map.delete(entity_data.components, type)}}
@@ -57,8 +61,24 @@ defmodule ElixirRPG.Entity do
     {:reply, entity_data.components, entity_data}
   end
 
-  def handle_call({:set_world, world_ref}, _from, entity_data) when is_pid(world_ref) do
-    {:reply, :ok, %Entity.Data{entity_data | world_ref: world_ref}}
+  def handle_call({:set_world_name, world_name}, _from, entity_data) when is_pid(world_name) do
+    {:reply, :ok, %Entity.Data{entity_data | world_name: world_name}}
+  end
+
+  def handle_call({:set_component_data, type, key, value}, _from, entity_data) do
+    case Map.get(entity_data.components, type) do
+      %{} = component ->
+        updated_component = %{component | key => value}
+
+        {:reply, :ok,
+         %Entity.Data{
+           entity_data
+           | components: %{entity_data.components | type => updated_component}
+         }}
+
+      _ ->
+        {:reply, :error, entity_data}
+    end
   end
 
   def handle_call(unknown_message, from, entity_data) do
@@ -71,11 +91,11 @@ defmodule ElixirRPG.Entity do
     {:reply, :ok, entity_data}
   end
 
-  defp register_with_component_group(type) do
-    EntityStore.add_entity_to_group(type, self())
+  defp register_with_component_group(type, world_name) do
+    EntityStore.add_entity_to_group(type, world_name, self())
   end
 
-  defp unregister_with_component_group(type) do
-    EntityStore.remove_entity_from_group(type, self())
+  defp unregister_with_component_group(type, world_name) do
+    EntityStore.remove_entity_from_group(type, world_name, self())
   end
 end
