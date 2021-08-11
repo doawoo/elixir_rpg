@@ -5,7 +5,7 @@ defmodule ElixirRPG do
   require Logger
 
   def start do
-    # First we create a world
+    # First create a world
     {:ok, the_world} = World.start_link(:testing_world)
 
     # Pause it for now
@@ -21,6 +21,11 @@ defmodule ElixirRPG do
     # Add some entities to the world
     # Three flans
     World.add_entity(the_world, Flan)
+    World.add_entity(the_world, Flan)
+    World.add_entity(the_world, Flan)
+
+    # Add the player character
+    World.add_entity(the_world, Zidane)
 
     # Un-pause the world and play!
     World.resume(the_world)

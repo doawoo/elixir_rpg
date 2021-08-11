@@ -1,7 +1,6 @@
 defmodule ElixirRPG.Entity.EntityStore do
   def add_entity_to_group(group, world_name, entity) when is_atom(group) and is_pid(entity) do
     full_name = Module.concat(world_name, group)
-    IO.inspect("add to #{full_name}")
     :pg2.create(full_name)
     :pg2.join(full_name, entity)
   end

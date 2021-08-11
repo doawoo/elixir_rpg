@@ -52,6 +52,12 @@ defmodule ElixirRPG.DSL.System do
     end
   end
 
+  defmacro log(item) do
+    quote do
+      ElixirRPG.Util.SystemLog.debug(unquote(item))
+    end
+  end
+
   defmacro get_component_data(component_type, key) do
     quote do
       __get_component_data(var!(entity), unquote(component_type), unquote(key))

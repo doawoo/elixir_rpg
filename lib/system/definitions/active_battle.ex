@@ -6,10 +6,12 @@ defsystem ActiveBattleSystem do
 
   name "ATBSystem"
 
+  wants ActorName
   wants ActorStats
   wants ActiveBattle
 
   on_tick do
+    name = get_component_data(ActorName, :name)
     speed_stat = get_component_data(ActorStats, :speed)
     current_atb = get_component_data(ActiveBattle, :atb_value)
 
@@ -19,6 +21,8 @@ defsystem ActiveBattleSystem do
       if new_atb_value >= 1.0 do
         set_component_data(ActiveBattle, :atb_value, 1.0)
         set_component_data(ActiveBattle, :ready, true)
+
+        log("Entity #{name} ATB is ready!")
       else
         set_component_data(ActiveBattle, :atb_value, new_atb_value)
       end

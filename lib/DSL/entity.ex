@@ -28,17 +28,10 @@ defmodule ElixirRPG.DSL.Entity do
             end)
 
           %Entity.Data{
-            name: @entity_name,
             components: components
           }
         end
       end
-    end
-  end
-
-  defmacro name(name) do
-    quote do
-      @entity_name unquote(name)
     end
   end
 
