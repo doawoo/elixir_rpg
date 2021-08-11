@@ -6,4 +6,8 @@ defmodule ElixirRPG.Util.SystemLog do
       Logger.debug("#{inspect(item)}")
     end
   end
+
+  def warn(item) do
+    Logger.warn("#{inspect(item)}")
+  end
 end

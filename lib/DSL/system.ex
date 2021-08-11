@@ -27,6 +27,10 @@ defmodule ElixirRPG.DSL.System do
           end
         end
 
+        defp __get_all_components(entity_pid) do
+          GenServer.call(entity_pid, :get_all_components)
+        end
+
         defp __set_component_data(entity_pid, component_type, key, new_value) do
           GenServer.call(entity_pid, {:set_component_data, component_type, key, new_value})
         end
@@ -58,9 +62,21 @@ defmodule ElixirRPG.DSL.System do
     end
   end
 
+  defmacro warn(item) do
+    quote do
+      ElixirRPG.Util.SystemLog.warn(unquote(item))
+    end
+  end
+
   defmacro get_component_data(component_type, key) do
     quote do
       __get_component_data(var!(entity), unquote(component_type), unquote(key))
+    end
+  end
+
+  defmacro get_all_components() do
+    quote do
+      __get_all_components(var!(entity))
     end
   end
 
