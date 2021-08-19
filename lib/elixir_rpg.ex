@@ -20,9 +20,6 @@ defmodule ElixirRPG do
     Enum.each(systems, fn s -> World.add_system(the_world, s) end)
 
     # Add some entities to the world
-    # Three flans
-    World.add_entity(the_world, Flan)
-    World.add_entity(the_world, Flan)
     World.add_entity(the_world, Flan)
 
     # Add the player character

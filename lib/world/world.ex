@@ -62,7 +62,7 @@ defmodule ElixirRPG.World do
         system.wants()
         |> EntityStore.get_entities_with(current_state.name)
 
-      system.__tick(ents)
+      system.__tick(ents, current_state.name)
     end)
 
     {:noreply, current_state}
