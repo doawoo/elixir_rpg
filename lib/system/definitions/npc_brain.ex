@@ -1,8 +1,5 @@
 use ElixirRPG.DSL.System
 
-alias ElixirRPG.Action
-alias ElixirRPG.Entity.EntityStore
-
 defsystem NPCBrainSystem do
   name "EnemyBrainSystem"
 
@@ -38,13 +35,14 @@ defsystem NPCBrainSystem do
           code
         end
 
-      Code.eval_string(src,
-        entity: entity,
-        world: world_name,
-        get_components: &script_binding_get_components/1,
-        make_action: &Action.make_action/3,
-        execute_action: &Action.execute/1,
-        get_entities_with: &EntityStore.get_entities_with/2
+      Code.eval_string(
+        src,
+        [
+          entity: entity,
+          world: world_name,
+          get_components: &script_binding_get_components/1
+        ],
+        custom_script_env()
       )
 
       log("Entity NPC #{name} consumed ATB and is going to act!")
@@ -67,5 +65,18 @@ defsystem NPCBrainSystem do
 
   defp script_binding_get_components(entity) do
     get_all_components()
+  end
+
+  defp custom_script_env do
+    alias ElixirRPG.Action
+    alias ElixirRPG.Action.ActionTypes
+    alias ElixirRPG.Entity.EntityStore
+
+    # Make the linter be quiet
+    _ = Action
+    _ = ActionTypes
+    _ = EntityStore
+
+    __ENV__
   end
 end

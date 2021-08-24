@@ -14,7 +14,8 @@ defmodule ElixirRPG do
     # Now add systems
     systems = [
       RuntimeSystems.ActiveBattleSystem,
-      RuntimeSystems.NPCBrainSystem
+      RuntimeSystems.NPCBrainSystem,
+      RuntimeSystems.CombatSystem
     ]
 
     Enum.each(systems, fn s -> World.add_system(the_world, s) end)

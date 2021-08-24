@@ -7,11 +7,8 @@
 # Select a totally random player character in the party
 random_pc = Enum.random(player_characters)
 
-# Build an attack intent action that targets them
-atk_action = make_action.(:attack, random_pc, %{
-  attack_type: :physical,
-  strength: self[ActorStats].strength,
-})
+# Attack them with non pierce physical damange
+atk_action = ActionTypes.physical_damage(random_pc, self[ActorStats].strength, false)
 
 # Execute attack action
-execute_action.(atk_action)
+Action.execute(atk_action)

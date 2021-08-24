@@ -11,6 +11,8 @@ defsystem ActiveBattleSystem do
   wants ActiveBattle
 
   on_tick do
+    _world = world_name
+
     name = get_component_data(ActorName, :name)
     speed_stat = get_component_data(ActorStats, :speed)
     current_atb = get_component_data(ActiveBattle, :atb_value)

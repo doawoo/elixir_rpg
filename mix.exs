@@ -21,7 +21,8 @@ defmodule ElixirRpg.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:typed_struct, "~> 0.2.1"}
+      {:typed_struct, "~> 0.2.1"},
+      {:qex, "~> 0.5"}
     ]
   end
 end

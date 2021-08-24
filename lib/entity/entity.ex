@@ -3,13 +3,14 @@ defmodule ElixirRPG.Entity do
 
   require Logger
 
+  alias ElixirRPG.Action
   alias ElixirRPG.Entity
   alias ElixirRPG.Entity.EntityStore
 
   def create_entity(type, world_name) when is_atom(type) do
     full_type = Module.concat(ElixirRPG.EntityTypes, type)
     data = full_type.create()
-    data = %Entity.Data{data | world_name: world_name}
+    data = %Entity.Data{data | world_name: world_name, action_queue: Qex.new()}
     start_link(data)
   end
 
@@ -25,6 +26,8 @@ defmodule ElixirRPG.Entity do
 
     {:ok, entity_data}
   end
+
+  # Calls for component manipulation
 
   @impl GenServer
   def handle_call({:add_component, type, data}, _from, entity_data)
@@ -81,6 +84,22 @@ defmodule ElixirRPG.Entity do
     end
   end
 
+  # Calls for action queue management
+
+  def handle_call({:action_recv, %Action{} = action}, _from, entity_data) do
+    {:reply, :ok,
+     %Entity.Data{entity_data | action_queue: Qex.push(entity_data.action_queue, action)}}
+  end
+
+  def handle_call(:pop_action, _from, entity_data) do
+    case Qex.pop(entity_data.action_queue) do
+      {:empty, _} -> {:reply, :empty, entity_data}
+      {{:value, action}, rest} -> {:reply, action, %Entity.Data{entity_data | action_queue: rest}}
+    end
+  end
+
+  # Catch-all Call because sometimes it helps :D
+
   def handle_call(unknown_message, from, entity_data) do
     Logger.warn(
       "#{inspect(self())} got an unknown message from #{inspect(from)}: #{
@@ -90,6 +109,8 @@ defmodule ElixirRPG.Entity do
 
     {:reply, :ok, entity_data}
   end
+
+  # Private helper functions
 
   defp register_with_component_group(type, world_name) do
     EntityStore.add_entity_to_group(type, world_name, self())
