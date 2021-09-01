@@ -1,5 +1,6 @@
 defmodule ElixirRPG do
   alias ElixirRPG.World
+  alias ElixirRPG.World.Input
   alias ElixirRPG.RuntimeSystems
 
   require Logger
@@ -14,6 +15,7 @@ defmodule ElixirRPG do
     # Now add systems
     systems = [
       RuntimeSystems.ActiveBattleSystem,
+      RuntimeSystems.PlayerInput,
       RuntimeSystems.NPCBrainSystem,
       RuntimeSystems.CombatSystem
     ]
@@ -21,12 +23,24 @@ defmodule ElixirRPG do
     Enum.each(systems, fn s -> World.add_system(the_world, s) end)
 
     # Add some entities to the world
-    World.add_entity(the_world, Flan)
+    # World.add_entity(the_world, Flan)
 
     # Add the player character
-    World.add_entity(the_world, Zidane)
+    # World.add_entity(the_world, Zidane)
 
     # Un-pause the world and play!
-    World.resume(the_world)
+    # World.resume(the_world)
+
+    the_world
+  end
+
+  def input_attack(world, player, target) do
+    input = %Input{
+      input_type: :liveview_input,
+      target_character: player,
+      input_paramters: {:phys_attack, target}
+    }
+
+    GenServer.call(world, {:input, input})
   end
 end

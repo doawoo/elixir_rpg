@@ -5,6 +5,8 @@ defmodule ElixirRPG.World do
   alias ElixirRPG.Entity
   alias ElixirRPG.Entity.EntityStore
 
+  require Logger
+
   @initial_state %World.Data{target_tick_rate: 15}
 
   def start_link(name) when is_atom(name) do
@@ -53,6 +55,24 @@ defmodule ElixirRPG.World do
   def handle_cast({:add_entity, entity_type}, current_state) do
     Entity.create_entity(entity_type, current_state.name)
     {:noreply, current_state}
+  end
+
+  @impl GenServer
+  def handle_call({:input, input_struct}, _from, current_state) do
+    {:reply, :ok, %World.Data{current_state | pending_input: input_struct}}
+  end
+
+  def handle_call(:peek_input, _from, current_state) do
+    {:reply, current_state.pending_input, current_state}
+  end
+
+  def handle_call(:consume_input, _from, current_state) do
+    {:reply, current_state.pending_input, %World.Data{current_state | pending_input: nil}}
+  end
+
+  def handle_call(message, from, current_state) do
+    Logger.warn("Unkown message type #{inspect(message)}, from #{inspect(from)}")
+    {:reply, :ok, current_state}
   end
 
   @impl GenServer

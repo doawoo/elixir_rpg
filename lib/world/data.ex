@@ -7,5 +7,7 @@ defmodule ElixirRPG.World.Data do
     field(:target_tick_rate, integer(), default: 0)
 
     field(:systems, list(), default: [])
+
+    field(:pending_input, World.Input.t(), default: nil)
   end
 end
