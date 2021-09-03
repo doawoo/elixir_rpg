@@ -13,14 +13,23 @@ defmodule ElixirRPG.Entity.EntityStore do
 
   def get_entities_with([single_want_list], world_name) do
     full_name = Module.concat(world_name, single_want_list)
-    :pg2.get_members(full_name)
+
+    case :pg2.get_members(full_name) do
+      {:error, _} -> []
+      result -> result
+    end
   end
 
   def get_entities_with(want_list, world_name) when is_list(want_list) do
     all_wants =
       Enum.map(want_list, fn want ->
         full_name = Module.concat(world_name, want)
-        :pg2.get_members(full_name) |> :sets.from_list()
+
+        case :pg2.get_members(full_name) do
+          {:error, _} -> []
+          result -> result
+        end
+        |> :sets.from_list()
       end)
 
     :sets.intersection(all_wants) |> :sets.to_list()

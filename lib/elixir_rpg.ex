@@ -5,9 +5,11 @@ defmodule ElixirRPG do
 
   require Logger
 
-  def start do
+  def start(world_name, front_end_pid) do
+    name = String.to_atom(world_name)
+
     # First create a world
-    {:ok, the_world} = World.start_link(:testing_world)
+    {:ok, the_world} = World.start_link(name, front_end_pid)
 
     # Pause it for now
     World.pause(the_world)
@@ -15,9 +17,10 @@ defmodule ElixirRPG do
     # Now add systems
     systems = [
       RuntimeSystems.ActiveBattleSystem,
-      RuntimeSystems.PlayerInput,
+      # RuntimeSystems.PlayerInput,
       RuntimeSystems.NPCBrainSystem,
-      RuntimeSystems.CombatSystem
+      RuntimeSystems.CombatSystem,
+      RuntimeSystems.DrawingSystem
     ]
 
     Enum.each(systems, fn s -> World.add_system(the_world, s) end)
@@ -42,5 +45,13 @@ defmodule ElixirRPG do
     }
 
     GenServer.call(world, {:input, input})
+  end
+
+  def add_player(world) do
+    World.add_entity(world, Zidane)
+  end
+
+  def add_flan(world) do
+    World.add_entity(world, Flan)
   end
 end

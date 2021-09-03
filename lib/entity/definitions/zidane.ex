@@ -8,6 +8,8 @@ defentity Zidane do
     strength: 23
   }
 
+  component Sprite, %{sprite_name: "zidane"}
+
   component ActorName, %{name: "Zidane"}
 
   component ActiveBattle

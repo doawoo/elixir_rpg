@@ -21,7 +21,7 @@ defmodule ElixirRPG.Action do
 
   def execute(%Action{} = action) do
     if Process.alive?(action.target_entity) do
-      Logger.debug("Action enqueued: #{inspect(action)}")
+      Logger.debug("Action enqueued from: #{inspect(action)}")
       GenServer.call(action.target_entity, {:action_recv, action})
     else
       Logger.warn("Action was dropped because target PID was dead: #{inspect(action)}")

@@ -114,12 +114,15 @@ defmodule ElixirRPG.DSL.System do
     quote do
       alias ElixirRPG.Util.PerfUtil
 
-      def __process_entity(var!(entity), var!(world_name)) do
+      def __process_entity(var!(entity), var!(world_name), var!(frontend_pid)) do
         unquote(block)
       end
 
-      def __tick(entity_list, world_name) when is_list(entity_list) and is_atom(world_name) do
-        PerfUtil.parallel_map(entity_list, fn ent -> __process_entity(ent, world_name) end)
+      def __tick(entity_list, world_name, frontend_pid)
+          when is_list(entity_list) and is_atom(world_name) do
+        PerfUtil.parallel_map(entity_list, fn ent ->
+          __process_entity(ent, world_name, frontend_pid)
+        end)
       end
     end
   end

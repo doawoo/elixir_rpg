@@ -8,8 +8,9 @@ defsystem NPCBrainSystem do
   wants ActiveBattle
   wants NPCBrain
 
+  @brain_location __ENV__.file |> Path.dirname() |> Path.join("../../../brains")
   @common_keyword "#! import_common"
-  @common_code_path "brains/common.exs"
+  @common_code_path Path.join(@brain_location, "common.exs")
   @common_code File.read!(@common_code_path)
 
   def __mix_recompile__? do
@@ -17,6 +18,7 @@ defsystem NPCBrainSystem do
   end
 
   on_tick do
+    _frontend = frontend_pid
     name = get_component_data(ActorName, :name)
     code = get_component_data(NPCBrain, :cached_src)
     brain_name = get_component_data(NPCBrain, :brain_name)
@@ -30,7 +32,7 @@ defsystem NPCBrainSystem do
       # If we cached this brain already don't load it again
       src =
         if code == "" do
-          load_script_file(entity, "brains/#{brain_name}.brain.exs")
+          load_script_file(entity, "/#{brain_name}.brain.exs")
         else
           code
         end
@@ -51,7 +53,7 @@ defsystem NPCBrainSystem do
 
   defp load_script_file(entity, file) do
     code =
-      File.read!(file)
+      File.read!(Path.join(@brain_location, file))
       |> String.replace(@common_keyword, @common_code)
 
     IO.inspect(code)

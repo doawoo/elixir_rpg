@@ -4,6 +4,8 @@ defsystem ActiveBattleSystem do
   # Simple system that bumps the ATB value on any entity that has one
   # Caps at and sets :ready to true when equal to 1.0
 
+  require Logger
+
   name "ATBSystem"
 
   wants ActorName
@@ -23,8 +25,6 @@ defsystem ActiveBattleSystem do
       if new_atb_value >= 1.0 do
         set_component_data(ActiveBattle, :atb_value, 1.0)
         set_component_data(ActiveBattle, :ready, true)
-
-        log("Entity #{name} ATB is ready!")
       else
         set_component_data(ActiveBattle, :atb_value, new_atb_value)
       end
