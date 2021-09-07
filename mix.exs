@@ -22,7 +22,7 @@ defmodule ElixirRpg.MixProject do
   defp deps do
     [
       {:typed_struct, "~> 0.2.1"},
-      {:phoenix_live_view, "~> 0.15.1"},
+      {:phoenix_live_view, "~> 0.16.3"},
       {:qex, "~> 0.5"}
     ]
   end
