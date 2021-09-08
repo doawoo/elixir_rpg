@@ -8,7 +8,7 @@ defentity Flan do
     strength: 23
   }
 
-  component Sprite, %{sprite_name: "flan_green"}
+  component Sprite, %{sprite_name: "flan.jpg"}
 
   component ActorName, %{name: "Flan"}
 
