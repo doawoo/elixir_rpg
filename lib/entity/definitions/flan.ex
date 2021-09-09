@@ -6,7 +6,7 @@ defentity Flan do
     hp: 75,
     max_mp: 183,
     mp: 183,
-    speed: 17,
+    speed: 5,
     strength: 23
   }
 
@@ -14,6 +14,6 @@ defentity Flan do
 
   component ActorName, %{name: "Flan"}
 
-  component NPCBrain
+  component NPCBrain, %{brain_name: "flan"}
   component ActiveBattle
 end

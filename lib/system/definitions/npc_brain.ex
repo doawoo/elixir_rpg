@@ -56,8 +56,6 @@ defsystem NPCBrainSystem do
       File.read!(Path.join(@brain_location, file))
       |> String.replace(@common_keyword, @common_code)
 
-    IO.inspect(code)
-
     warn("Going to load code file: #{file} into component cache")
     set_component_data(NPCBrain, :cached_src, code)
     code
