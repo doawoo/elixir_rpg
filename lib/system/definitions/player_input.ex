@@ -3,8 +3,6 @@ use ElixirRPG.DSL.System
 defsystem PlayerInput do
   require Logger
 
-  alias ElixirRPG.World.Input
-
   name "PlayerInputSystem"
 
   wants ActorName
@@ -13,26 +11,20 @@ defsystem PlayerInput do
   wants ActiveBattle
 
   on_tick do
+    _ = frontend_pid
     can_move? = get_component_data(ActiveBattle, :ready)
+    set_component_data(PlayerInput, :enabled, can_move?)
 
     # 1. Able to move?
     # 2. Have an input to consume?
     # 3. Input is for us?
     with true <- can_move?,
-         ## TODO GenServer it calling itself here so we probably need an input genserver, not the world!
-         %Input{} = input <- GenServer.call(world_name, :peek_input),
-         true <- entity == input.target_character do
-      GenServer.call(world_name, :consume_input) |> process_input()
+         %{} = input_map <- ElixirRPG.get_pending_input(world_name),
+         true <- Map.has_key?(input_map, entity) do
+      # Consume the input and execute the action
+      # Clear the input from the input server
     else
       _ -> :ok
     end
-  end
-
-  defp process_input(%Input{} = input_struct) do
-    Logger.info(
-      "Executing pending input: #{inspect(input_struct.target_character)} #{
-        inspect(input_struct.input_paramters)
-      }"
-    )
   end
 end

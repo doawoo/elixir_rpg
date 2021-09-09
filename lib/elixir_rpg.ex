@@ -10,6 +10,10 @@ defmodule ElixirRPG do
 
     # First create a world
     {:ok, the_world} = World.start_link(name, front_end_pid)
+    {:ok, input_server} = World.InputServer.start_link(name)
+
+    Logger.info("Booted World at PID: #{inspect(the_world)}")
+    Logger.info("Booted InputServer at PID: #{inspect(input_server)}")
 
     # Pause it for now
     World.pause(the_world)
@@ -17,7 +21,7 @@ defmodule ElixirRPG do
     # Now add systems
     systems = [
       RuntimeSystems.ActiveBattleSystem,
-      # RuntimeSystems.PlayerInput,
+      RuntimeSystems.PlayerInput,
       RuntimeSystems.NPCBrainSystem,
       RuntimeSystems.CombatSystem,
       RuntimeSystems.DrawingSystem
@@ -25,22 +29,17 @@ defmodule ElixirRPG do
 
     Enum.each(systems, fn s -> World.add_system(the_world, s) end)
 
-    # Add some entities to the world
-    # World.add_entity(the_world, Flan)
-
-    # Add the player character
-    # World.add_entity(the_world, Zidane)
-
-    # Un-pause the world and play!
-    # World.resume(the_world)
-
     the_world
+  end
+
+  def get_pending_input(world) do
+    World.InputServer.peek_input(world)
   end
 
   def input_attack(world, player, target) do
     input = %Input{
       input_type: :liveview_input,
-      target_character: player,
+      from_entity: player,
       input_paramters: {:phys_attack, target}
     }
 

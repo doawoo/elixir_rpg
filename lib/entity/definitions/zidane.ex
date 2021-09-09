@@ -2,7 +2,9 @@ use ElixirRPG.DSL.Entity
 
 defentity Zidane do
   component ActorStats, %{
-    hp: 105,
+    max_hp: 100,
+    hp: 100,
+    max_mp: 36,
     mp: 36,
     speed: 23,
     strength: 23
