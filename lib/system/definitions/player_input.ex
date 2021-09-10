@@ -15,14 +15,13 @@ defsystem PlayerInput do
     can_move? = get_component_data(ActiveBattle, :ready)
     set_component_data(PlayerInput, :enabled, can_move?)
 
-    # 1. Able to move?
-    # 2. Have an input to consume?
-    # 3. Input is for us?
+    # Are we able to move, is there input pending, and is it for us?
     with true <- can_move?,
          %{} = input_map <- ElixirRPG.get_pending_input(world_name),
          true <- Map.has_key?(input_map, entity) do
-      # Consume the input and execute the action
-      # Clear the input from the input server
+      input = input_map[entity]
+      ElixirRPG.clear_input(world_name, entity)
+      Logger.info("Consume input from #{inspect(entity)} -- #{inspect(input)}")
     else
       _ -> :ok
     end

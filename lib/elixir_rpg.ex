@@ -36,14 +36,18 @@ defmodule ElixirRPG do
     World.InputServer.peek_input(world)
   end
 
-  def input_attack(world, player, target) do
+  def clear_input(world, from) do
+    World.InputServer.clear_input(world, from)
+  end
+
+  def do_input(world, from, type, parameters) do
     input = %Input{
-      input_type: :liveview_input,
-      from_entity: player,
-      input_paramters: {:phys_attack, target}
+      input_type: type,
+      from_entity: from,
+      input_paramters: parameters
     }
 
-    GenServer.call(world, {:input, input})
+    World.InputServer.push_input(world, input)
   end
 
   def add_player(world) do

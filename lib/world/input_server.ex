@@ -15,11 +15,11 @@ defmodule ElixirRPG.World.InputServer do
   end
 
   def push_input(world, %Input{} = input) do
-    GenServer.cast(full_name(world), {:push, input})
+    GenServer.cast(full_name(world), {:push_input, input})
   end
 
-  def clear_input(world, %Input{} = input) do
-    GenServer.cast(full_name(world), {:push, input})
+  def clear_input(world, source_pid) do
+    GenServer.cast(full_name(world), {:clear_input, source_pid})
   end
 
   defp full_name(world_name), do: Module.concat(world_name, :input_server)
@@ -42,12 +42,12 @@ defmodule ElixirRPG.World.InputServer do
   end
 
   @impl GenServer
-  def handle_cast({:push_input, source_pid, %Input{} = input}, state) do
-    {:noreply, Map.put(state, source_pid, input)}
+  def handle_cast({:push_input, %Input{} = input}, state) do
+    {:noreply, Map.put(state, input.from_entity, input)}
   end
 
   def handle_cast({:clear_input, source_pid}, state) do
-    {:reply, Map.delete(state, source_pid)}
+    {:noreply, Map.delete(state, source_pid)}
   end
 
   def handle_cast(msg, state) do
