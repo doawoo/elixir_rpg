@@ -7,5 +7,6 @@ defcomponent ActorStats do
   member :mp, 15
   member :speed, 15
   member :strength, 15
+  member :defense, 5
   member :dead, false
 end

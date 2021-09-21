@@ -7,7 +7,8 @@ defentity Zidane do
     max_mp: 36,
     mp: 36,
     speed: 23,
-    strength: 23
+    strength: 23,
+    defense: 6
   }
 
   component Sprite, %{sprite_name: "zidane.png"}

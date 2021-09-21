@@ -14,6 +14,18 @@ defmodule ElixirRPG.Entity do
     start_link(data)
   end
 
+  def pop_action(entity) do
+    GenServer.call(entity, :pop_action)
+  end
+
+  def get_component(entity, type) do
+    GenServer.call(entity, {:get_component, type})
+  end
+
+  def set_component_data(entity, type, key, value) do
+    GenServer.call(entity, {:set_component_data, type, key, value})
+  end
+
   def start_link(%Entity.Data{} = entity_data) do
     GenServer.start_link(__MODULE__, data: entity_data)
   end
