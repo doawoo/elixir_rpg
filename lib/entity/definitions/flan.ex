@@ -16,4 +16,6 @@ defentity Flan do
 
   component NPCBrain, %{brain_name: "flan"}
   component ActiveBattle
+
+  component AnimationMod
 end

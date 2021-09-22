@@ -7,9 +7,13 @@ defsystem CombatSystem do
   alias ElixirRPG.Entity
   alias ElixirRPG.Action
 
+  alias ElixirRPG.RuntimeSystems.AnimateModSystem
+
   name "CombatSystem"
 
   wants ActorName
+  wants ActorStats
+  wants AnimationMod
 
   on_tick do
     _ = world_name
@@ -32,8 +36,18 @@ defsystem CombatSystem do
         if new_hp <= 0 do
           Entity.set_component_data(entity_pid, ActorStats, :hp, 0)
           Entity.set_component_data(entity_pid, ActorStats, :dead, true)
+
+          AnimateModSystem.add_animation(
+            entity_pid,
+            "animate__rotateOut animate__faster"
+          )
         else
           Entity.set_component_data(entity_pid, ActorStats, :hp, new_hp)
+
+          AnimateModSystem.add_animation(
+            entity_pid,
+            "animate__jello animate__faster"
+          )
         end
 
       _ ->

@@ -45,4 +45,16 @@ defmodule ElixirRPG.DSL.Component do
       field(unquote(name), String.t(), default: unquote(default_value))
     end
   end
+
+  defmacro member(name, default_value) when is_list(default_value) do
+    quote do
+      field(unquote(name), list(), default: unquote(default_value))
+    end
+  end
+
+  defmacro member(name, default_value) when is_map(default_value) do
+    quote do
+      field(unquote(name), %{}, default: unquote(default_value))
+    end
+  end
 end

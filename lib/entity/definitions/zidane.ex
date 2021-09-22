@@ -17,4 +17,6 @@ defentity Zidane do
 
   component ActiveBattle
   component PlayerInput
+
+  component AnimationMod
 end
