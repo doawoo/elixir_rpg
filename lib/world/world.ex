@@ -7,7 +7,7 @@ defmodule ElixirRPG.World do
 
   require Logger
 
-  @initial_state %World.Data{target_tick_rate: 15}
+  @initial_state %World.Data{target_tick_rate: 15, last_tick: nil}
 
   def start_link(name, live_view_frontend \\ nil) when is_atom(name) do
     GenServer.start_link(__MODULE__, [args: {name, live_view_frontend}], name: name)
@@ -37,7 +37,8 @@ defmodule ElixirRPG.World do
 
     clock_ref = World.Clock.start_tick(state.target_tick_rate, self())
 
-    {:ok, %World.Data{state | name: world_name, frontend: liveview_pid, clock: clock_ref}}
+    curr_time = :os.system_time(:millisecond)
+    {:ok, %World.Data{state | name: world_name, frontend: liveview_pid, clock: clock_ref, last_tick: curr_time}}
   end
 
   @impl GenServer
@@ -68,13 +69,17 @@ defmodule ElixirRPG.World do
 
   @impl GenServer
   def handle_info(:tick, current_state) do
+    curr_time = :os.system_time(:millisecond)
+    last_tick_time = current_state.last_tick
+    delta_time = curr_time - last_tick_time
+
     if current_state.playing do
       Enum.each(current_state.systems, fn system ->
         ents =
           system.wants()
           |> EntityStore.get_entities_with(current_state.name)
 
-        system.__tick(ents, current_state.name, current_state.frontend)
+        system.__tick(ents, current_state.name, current_state.frontend, delta_time)
       end)
     end
 

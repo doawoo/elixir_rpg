@@ -9,6 +9,7 @@ defsystem DrawingSystem do
   wants Sprite
 
   on_tick do
+    _dt = delta_time
     _world = world_name
     data = get_all_components()
 

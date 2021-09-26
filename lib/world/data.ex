@@ -7,6 +7,7 @@ defmodule ElixirRPG.World.Data do
     field(:clock, pid(), default: nil)
     field(:playing, boolean(), default: false)
     field(:target_tick_rate, integer(), default: 0)
+    field(:last_tick, integer(), default: 0)
 
     field(:frontend, pid(), default: nil)
 
