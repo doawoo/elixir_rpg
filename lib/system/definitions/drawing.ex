@@ -3,11 +3,9 @@ use ElixirRPG.DSL.System
 defsystem DrawingSystem do
   require Logger
 
-  name "CombatSystem"
+  name "DrawingSystem"
 
   wants ActorName
-  wants ActorStats
-  wants ActiveBattle
   wants Sprite
 
   on_tick do
