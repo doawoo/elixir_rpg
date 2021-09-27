@@ -56,4 +56,8 @@ defmodule ElixirRPG do
     World.add_entity(world, BotB)
     World.add_entity(world, BotC)
   end
+
+  def add_flan(world) do
+    World.add_entity(world, Flan)
+  end
 end

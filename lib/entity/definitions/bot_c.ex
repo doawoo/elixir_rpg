@@ -9,5 +9,8 @@ defentity BotC do
 
   component GridPosition, %{index: 9}
 
+  component ActiveBattle
+  component ActorStats
+
   component AnimationMod
 end
