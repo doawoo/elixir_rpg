@@ -50,14 +50,4 @@ defmodule ElixirRPG do
 
     World.InputServer.push_input(world, input)
   end
-
-  def add_players(world) do
-    World.add_entity(world, BotA)
-    World.add_entity(world, BotB)
-    World.add_entity(world, BotC)
-  end
-
-  def add_flan(world) do
-    World.add_entity(world, Flan)
-  end
 end

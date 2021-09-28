@@ -4,7 +4,6 @@ defsystem NPCBrainSystem do
   name "EnemyBrainSystem"
 
   wants ActorName
-  wants ActorStats
   wants ActiveBattle
   wants NPCBrain
 
@@ -18,7 +17,8 @@ defsystem NPCBrainSystem do
   end
 
   on_tick do
-    _frontend = frontend_pid
+    _ = frontend_pid
+    _ = delta_time
     name = get_component_data(ActorName, :name)
     code = get_component_data(NPCBrain, :cached_src)
     brain_name = get_component_data(NPCBrain, :brain_name)

@@ -38,7 +38,15 @@ defmodule ElixirRPG.World do
     clock_ref = World.Clock.start_tick(state.target_tick_rate, self())
 
     curr_time = :os.system_time(:millisecond)
-    {:ok, %World.Data{state | name: world_name, frontend: liveview_pid, clock: clock_ref, last_tick: curr_time}}
+
+    {:ok,
+     %World.Data{
+       state
+       | name: world_name,
+         frontend: liveview_pid,
+         clock: clock_ref,
+         last_tick: curr_time
+     }}
   end
 
   @impl GenServer
@@ -71,7 +79,7 @@ defmodule ElixirRPG.World do
   def handle_info(:tick, current_state) do
     curr_time = :os.system_time(:millisecond)
     last_tick_time = current_state.last_tick
-    delta_time = curr_time - last_tick_time
+    delta_time = (curr_time - last_tick_time) / 1000
 
     if current_state.playing do
       Enum.each(current_state.systems, fn system ->
@@ -86,7 +94,7 @@ defmodule ElixirRPG.World do
     update_frontend_world_state(current_state)
     flush_frontend_backbuffer(current_state)
 
-    {:noreply, current_state}
+    {:noreply, %World.Data{current_state | last_tick: curr_time}}
   end
 
   def update_frontend_world_state(state) do

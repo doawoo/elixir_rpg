@@ -9,18 +9,18 @@ defsystem ActiveBattleSystem do
   name "ATBSystem"
 
   wants ActorName
-  wants ActorStats
+  wants DemoStats
   wants ActiveBattle
 
   on_tick do
-    _world = world_name
+    _ = world_name
+    _ = frontend_pid
 
-    name = get_component_data(ActorName, :name)
-    speed_stat = get_component_data(ActorStats, :speed)
+    speed_stat = get_component_data(DemoStats, :speed)
     current_atb = get_component_data(ActiveBattle, :atb_value)
 
     if current_atb < 1.0 do
-      new_atb_value = current_atb + speed_stat / 1000
+      new_atb_value = current_atb + speed_stat / 100 * delta_time
 
       if new_atb_value >= 1.0 do
         set_component_data(ActiveBattle, :atb_value, 1.0)

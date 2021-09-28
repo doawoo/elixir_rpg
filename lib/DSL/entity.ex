@@ -42,6 +42,17 @@ defmodule ElixirRPG.DSL.Entity do
   end
 
   defmacro component(component_type, default_data) do
+    {:__aliases__, _, [type]} = component_type
+    full_type = Module.concat(ElixirRPG.ComponentTypes, type)
+
+    if !Code.ensure_compiled?(full_type) do
+      raise(CompileError,
+        description: "Component #{type} does not exist!",
+        file: __CALLER__.file,
+        line: __CALLER__.line
+      )
+    end
+
     quote do
       @components {unquote(component_type), unquote(default_data)}
     end

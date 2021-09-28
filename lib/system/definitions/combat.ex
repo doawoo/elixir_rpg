@@ -12,7 +12,7 @@ defsystem CombatSystem do
   name "CombatSystem"
 
   wants ActorName
-  wants ActorStats
+  wants DemoStats
   wants AnimationMod
 
   on_tick do
@@ -28,21 +28,21 @@ defsystem CombatSystem do
   defp process_action(_entity_pid, :empty), do: :ok
 
   defp process_action(entity_pid, %Action{action_type: :dmg_phys} = action) do
-    case Entity.get_component(entity_pid, ActorStats) do
-      %ComponentTypes.ActorStats{} = stats ->
+    case Entity.get_component(entity_pid, DemoStats) do
+      %ComponentTypes.DemoStats{} = stats ->
         dmg_delt = action.payload.power - stats.defense
         new_hp = stats.hp - dmg_delt
 
         if new_hp <= 0 do
-          Entity.set_component_data(entity_pid, ActorStats, :hp, 0)
-          Entity.set_component_data(entity_pid, ActorStats, :dead, true)
+          Entity.set_component_data(entity_pid, DemoStats, :hp, 0)
+          Entity.set_component_data(entity_pid, DemoStats, :dead, true)
 
           AnimateModSystem.add_animation(
             entity_pid,
             "animate__rotateOut animate__faster"
           )
         else
-          Entity.set_component_data(entity_pid, ActorStats, :hp, new_hp)
+          Entity.set_component_data(entity_pid, DemoStats, :hp, new_hp)
 
           AnimateModSystem.add_animation(
             entity_pid,

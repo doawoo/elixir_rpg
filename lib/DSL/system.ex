@@ -105,6 +105,17 @@ defmodule ElixirRPG.DSL.System do
   end
 
   defmacro wants(component_name) do
+    {:__aliases__, _, [type]} = component_name
+    full_type = Module.concat(ElixirRPG.ComponentTypes, type)
+
+    if !Code.ensure_compiled?(full_type) do
+      raise(CompileError,
+        description: "Component #{type} does not exist!",
+        file: __CALLER__.file,
+        line: __CALLER__.line
+      )
+    end
+
     quote do
       @wants unquote(component_name)
     end
