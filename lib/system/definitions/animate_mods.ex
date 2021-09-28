@@ -23,9 +23,9 @@ defsystem AnimateModSystem do
     set_component_data(AnimationMod, :active_mods, updated_values)
   end
 
-  def add_animation(entity, animation_class) do
+  def add_animation(entity, animation_class, len \\ 5) do
     anim_data = Entity.get_component(entity, AnimationMod)
-    new_anim = {animation_class, 5}
+    new_anim = {animation_class, len}
     new_data = [new_anim | anim_data.active_mods]
     Entity.set_component_data(entity, AnimationMod, :active_mods, new_data)
   end
