@@ -9,8 +9,8 @@ defsystem DrawingSystem do
   wants Sprite
 
   on_tick do
-    _dt = delta_time
-    _world = world_name
+    _ = delta_time
+    _ = world_name
     data = get_all_components()
 
     send(frontend_pid, {:_push_drawable, entity, data})

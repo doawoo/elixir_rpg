@@ -1,10 +1,10 @@
 use ElixirRPG.DSL.Entity
 
 defentity Guy do
-  component ActorName, %{name: "Demo Character A"}
-  component Sprite, %{sprite_name: "bot.png"}
+  component ActorName, %{name: "Guy"}
+  component Sprite, %{sprite_name: "char/guy/guy.png"}
+  component GridPosition, %{index: 8}
 
-  component PlayerInput
   component ActionList, %{actions: [:dance]}
 
   component DemoStats, %{

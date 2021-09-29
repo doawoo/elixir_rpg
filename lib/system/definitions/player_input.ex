@@ -10,7 +10,6 @@ defsystem PlayerInput do
 
   wants ActorName
   wants DemoStats
-  wants PlayerInput
   wants ActiveBattle
   wants ActionList
 
@@ -19,7 +18,6 @@ defsystem PlayerInput do
     _ = frontend_pid
 
     can_move? = get_component_data(ActiveBattle, :ready)
-    set_component_data(PlayerInput, :enabled, can_move?)
     set_component_data(ActionList, :can_act, can_move?)
 
     # Are we able to move, is there input pending, and is it for us?
@@ -38,6 +36,7 @@ defsystem PlayerInput do
   defp process_input(%Input{} = input, entity) do
     action_list = Entity.get_component(entity, ActionList).actions
     action = input.input_paramters.action_name |> String.to_existing_atom()
+
     if Enum.member?(action_list, action) do
       Entity.set_component_data(entity, ActiveBattle, :ready, false)
       Entity.set_component_data(entity, ActiveBattle, :atb_value, 0.0)

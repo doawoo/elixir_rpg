@@ -10,6 +10,7 @@ defsystem AnimateModSystem do
   wants AnimationMod
 
   on_tick do
+    _ = delta_time
     _ = frontend_pid
     _ = world_name
     current_anims = get_component_data(AnimationMod, :active_mods)

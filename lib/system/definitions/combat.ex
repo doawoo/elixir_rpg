@@ -18,6 +18,7 @@ defsystem CombatSystem do
   on_tick do
     _ = world_name
     _ = frontend_pid
+    _ = delta_time
     # name = get_component_data(ActorName, :name)
 
     # pop actions from the queue and process them until we run out

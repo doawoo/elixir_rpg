@@ -1,6 +1,6 @@
 use ElixirRPG.DSL.Entity
 
-defentity Flan do
+defentity Cone do
   component DemoStats, %{
     max_hp: 75,
     hp: 75,
@@ -11,9 +11,9 @@ defentity Flan do
 
   component Sprite, %{sprite_name: "flan.jpg"}
 
-  component ActorName, %{name: "Flan"}
+  component ActorName, %{name: "Cone"}
 
-  component NPCBrain, %{brain_name: "flan"}
+  # component NPCBrain, %{brain_name: "flan"}
   component ActiveBattle
 
   component AnimationMod
