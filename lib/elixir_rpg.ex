@@ -19,16 +19,18 @@ defmodule ElixirRPG do
     World.pause(the_world)
 
     # Now add systems
-    systems = [
-      RuntimeSystems.ActiveBattleSystem,
-      RuntimeSystems.PlayerInput,
-      RuntimeSystems.NPCBrainSystem,
-      RuntimeSystems.CombatSystem,
-      RuntimeSystems.SpecialSpriteSystem,
-      RuntimeSystems.DrawingSystem,
-      RuntimeSystems.AnimateModSystem,
-      RuntimeSystems.ClearStateSystem
-    ]
+    systems =
+      [
+        RuntimeSystems.ActiveBattleSystem,
+        RuntimeSystems.PlayerInput,
+        RuntimeSystems.NPCBrainSystem,
+        RuntimeSystems.CombatSystem,
+        RuntimeSystems.SpecialSpriteSystem,
+        RuntimeSystems.DrawingSystem,
+        RuntimeSystems.AnimateModSystem,
+        RuntimeSystems.ClearStateSystem
+      ]
+      |> Enum.reverse()
 
     Enum.each(systems, fn s -> World.add_system(the_world, s) end)
 

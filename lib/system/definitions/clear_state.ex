@@ -16,7 +16,7 @@ defsystem ClearStateSystem do
     data = get_all_components()
 
     if data[Sprite].override_delay > 0 do
-      new_time = max(0, data[Sprite].override_delay - delta_time / 1000)
+      new_time = max(0, data[Sprite].override_delay - delta_time)
       set_component_data(Sprite, :override_delay, new_time)
     end
 

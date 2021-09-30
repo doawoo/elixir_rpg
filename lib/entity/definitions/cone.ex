@@ -9,11 +9,11 @@ defentity Cone do
     speed: 5
   }
 
-  component Sprite, %{sprite_name: "flan.jpg", full_image: true}
+  component Sprite, %{sprite_name: "enemy/cone.png", full_image: true}
 
   component ActorName, %{name: "Cone"}
 
-  # component NPCBrain, %{brain_name: "flan"}
+  component NPCBrain, %{brain_name: "cone"}
   component ActiveBattle
 
   component AnimationMod

@@ -34,7 +34,7 @@ defsystem SpecialSpriteSystem do
       cond do
         took_damage ->
           set_component_data(Sprite, :sprite_override, @sprite_override_hit)
-          set_component_data(Sprite, :override_delay, 2.0)
+          set_component_data(Sprite, :override_delay, 0.5)
 
         casting ->
           set_component_data(Sprite, :sprite_override, @sprite_override_casting)

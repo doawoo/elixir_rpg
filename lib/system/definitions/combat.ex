@@ -31,7 +31,7 @@ defsystem CombatSystem do
   defp process_action(entity_pid, %Action{action_type: :dmg_phys} = action) do
     case Entity.get_component(entity_pid, DemoStats) do
       %ComponentTypes.DemoStats{} = stats ->
-        dmg_delt = action.payload.power - stats.defense
+        dmg_delt = action.payload.power
         new_hp = stats.hp - dmg_delt
 
         if new_hp <= 0 do

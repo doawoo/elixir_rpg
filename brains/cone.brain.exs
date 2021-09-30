@@ -1,7 +1,7 @@
 #! import_common
 
 ####
-# Flan enemy brain script
+# Cone enemy brain script
 ####
 
 # Select a totally random player character in the party
@@ -9,8 +9,8 @@ if player_characters != [] do
   random_pc = Enum.random(player_characters)
 
   # Attack them with non pierce physical damange
-  dmg = 23
-  atk_action = ActionTypes.physical_damage(random_pc, dmg, false)
+  dmg = 2
+  atk_action = ActionTypes.physical_damage(random_pc, dmg, true)
 
   # Execute attack action
   Action.execute(atk_action)
