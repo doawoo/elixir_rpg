@@ -24,8 +24,10 @@ defmodule ElixirRPG do
       RuntimeSystems.PlayerInput,
       RuntimeSystems.NPCBrainSystem,
       RuntimeSystems.CombatSystem,
+      RuntimeSystems.SpecialSpriteSystem,
       RuntimeSystems.DrawingSystem,
-      RuntimeSystems.AnimateModSystem
+      RuntimeSystems.AnimateModSystem,
+      RuntimeSystems.ClearStateSystem
     ]
 
     Enum.each(systems, fn s -> World.add_system(the_world, s) end)

@@ -9,7 +9,7 @@ defentity Cone do
     speed: 5
   }
 
-  component Sprite, %{sprite_name: "flan.jpg"}
+  component Sprite, %{sprite_name: "flan.jpg", full_image: true}
 
   component ActorName, %{name: "Cone"}
 

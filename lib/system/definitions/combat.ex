@@ -44,6 +44,7 @@ defsystem CombatSystem do
           )
         else
           Entity.set_component_data(entity_pid, DemoStats, :hp, new_hp)
+          Entity.set_component_data(entity_pid, DemoStats, :just_took_damage, true)
 
           AnimateModSystem.add_animation(
             entity_pid,
