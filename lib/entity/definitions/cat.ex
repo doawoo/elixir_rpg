@@ -2,7 +2,7 @@ use ElixirRPG.DSL.Entity
 
 defentity Cat do
   component ActorName, %{name: "Cat"}
-  component Sprite, %{sprite_name: "char/cat/normal.png"}
+  component Sprite, %{sprite_name: "char/cat/normal.png", base_sprite_dir: "char/cat"}
   component GridPosition, %{index: 7}
 
   component ActionList, %{actions: [:attack, :flame, :roast]}
