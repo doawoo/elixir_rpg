@@ -24,6 +24,8 @@ defmodule ElixirRPG.DSL.System do
               Logger.warn(
                 "Could not fetch component #{inspect(component_type)} on #{inspect(entity_pid)}"
               )
+
+              nil
           end
         end
 

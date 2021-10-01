@@ -17,4 +17,6 @@ defentity UFO do
   component ActiveBattle
 
   component AnimationMod
+
+  component Status, %{status_list: [{:poison, 0.0}]}
 end

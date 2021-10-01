@@ -21,6 +21,7 @@ defmodule ElixirRPG do
     # Now add systems
     systems =
       [
+        RuntimeSystems.StatusEffectSystem,
         RuntimeSystems.ActiveBattleSystem,
         RuntimeSystems.PlayerInput,
         RuntimeSystems.NPCBrainSystem,
