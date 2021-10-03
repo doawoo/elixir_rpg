@@ -1,4 +1,4 @@
-defmodule ElixirRpg.MixProject do
+defmodule ElixirRPG.MixProject do
   use Mix.Project
 
   def project do
