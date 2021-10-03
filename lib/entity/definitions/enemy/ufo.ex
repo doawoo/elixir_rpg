@@ -18,5 +18,5 @@ defentity UFO do
 
   component AnimationMod
 
-  component Status, %{status_list: [{:poison, 0.0}]}
+  component Status, %{to_be_added: [{:coffee_up, 0.0}]}
 end
