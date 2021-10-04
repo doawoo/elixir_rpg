@@ -9,6 +9,8 @@ defentity Cylinder do
     speed: 5
   }
 
+  component Status
+
   component Sprite, %{sprite_name: "enemy/cylinder.png", full_image: true}
 
   component ActorName, %{name: "Cylinder"}

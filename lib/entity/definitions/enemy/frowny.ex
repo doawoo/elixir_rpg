@@ -9,6 +9,8 @@ defentity Frowny do
     speed: 5
   }
 
+  component Status
+
   component Sprite, %{sprite_name: "enemy/frowny.png", full_image: true}
 
   component ActorName, %{name: "Frowny"}

@@ -42,36 +42,35 @@ defmodule ElixirRPG.StatusEffects do
   end
 
   @doc """
-  Boosts the speed of the ATB bar
+  Boosts the speed of the ATB bar by 50%
   """
   def coffee_up do
     %StatusEffects{
       interval: -1.0,
       max_duration: 5.0,
       on_inflict: nil,
-      on_applied: fn _entity ->
-        IO.inspect("coffee_up applied!")
+      on_applied: fn entity ->
+        Entity.set_component_data(entity, ActiveBattle, :multiplier, 1.5)
       end,
       on_removed: fn entity ->
-        IO.inspect("coffee_up removed!")
         StatusEffectSystem.add_status_to_entity(entity, :coffee_down)
       end
     }
   end
 
   @doc """
-  Lessens the speed of the ATB bar
+  Lessens the speed of the ATB bar by 20%
   """
   def coffee_down do
     %StatusEffects{
       interval: -1.0,
       max_duration: 5.0,
       on_inflict: nil,
-      on_applied: fn _entity ->
-        IO.inspect("coffee_down applied!")
+      on_applied: fn entity ->
+        Entity.set_component_data(entity, ActiveBattle, :multiplier, 0.5)
       end,
-      on_removed: fn _entity ->
-        IO.inspect("coffee_down removed!")
+      on_removed: fn entity ->
+        Entity.set_component_data(entity, ActiveBattle, :multiplier, 1.0)
       end
     }
   end

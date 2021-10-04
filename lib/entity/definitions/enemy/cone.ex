@@ -9,6 +9,8 @@ defentity Cone do
     speed: 5
   }
 
+  component Status
+
   component Sprite, %{sprite_name: "enemy/cone.png", full_image: true}
 
   component ActorName, %{name: "Cone"}

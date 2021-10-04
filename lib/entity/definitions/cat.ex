@@ -8,12 +8,14 @@ defentity Cat do
   component ActionList, %{actions: [:attack, :flame, :roast]}
 
   component DemoStats, %{
-    hp: 20,
-    max_hp: 20,
-    mp: 10,
-    max_mp: 20,
-    speed: 10
+    hp: 50,
+    max_hp: 50,
+    mp: 30,
+    max_mp: 30,
+    speed: 12
   }
+
+  component Status
 
   component ActiveBattle
   component AnimationMod

@@ -9,6 +9,8 @@ defentity UFO do
     speed: 7
   }
 
+  component Status
+
   component Sprite, %{sprite_name: "enemy/ufo.png", full_image: true}
 
   component ActorName, %{name: "UFO"}
@@ -17,6 +19,4 @@ defentity UFO do
   component ActiveBattle
 
   component AnimationMod
-
-  component Status, %{to_be_added: [{:coffee_up, 0.0}]}
 end

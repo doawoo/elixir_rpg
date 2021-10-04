@@ -9,6 +9,8 @@ defentity Smiley do
     speed: 5
   }
 
+  component Status
+
   component Sprite, %{sprite_name: "enemy/smiley.png", full_image: true}
 
   component ActorName, %{name: "Smiley"}

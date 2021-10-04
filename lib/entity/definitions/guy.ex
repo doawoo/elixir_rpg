@@ -10,10 +10,12 @@ defentity Guy do
   component DemoStats, %{
     hp: 10,
     max_hp: 10,
-    mp: 10,
-    max_mp: 10,
-    speed: 10
+    mp: 5,
+    max_mp: 5,
+    speed: 15
   }
+
+  component Status, %{to_be_added: [{:coffee_up, 0.0}]}
 
   component ActiveBattle
   component AnimationMod
