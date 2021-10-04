@@ -34,7 +34,7 @@ defsystem PlayerInput do
   end
 
   defp process_input(%Input{} = input, entity) do
-    action_list = Entity.get_component(entity, ActionList).actions
+    action_list = Entity.get_component(entity, ActionList).actions |> Enum.map(&get_action/1)
     action = input.input_paramters.action_name |> String.to_existing_atom()
 
     if Enum.member?(action_list, action) do
@@ -51,4 +51,7 @@ defsystem PlayerInput do
     ElixirRPG.RuntimeSystems.AnimateModSystem.add_animation(entity, "animate__tada", 15.0)
     ElixirRPG.RuntimeSystems.SpecialSpriteSystem.set_sprite_override(entity, "dance.gif", 2.0)
   end
+
+  defp get_action({:intent, a}), do: a
+  defp get_action(a), do: a
 end

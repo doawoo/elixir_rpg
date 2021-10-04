@@ -19,4 +19,6 @@ defentity Cone do
   component ActiveBattle
 
   component AnimationMod
+
+  component Targetable, %{actions_enabled: [:shock, :burn, :attack]}
 end

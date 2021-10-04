@@ -21,6 +21,10 @@ defmodule ElixirRPG.World do
     GenServer.cast(world, {:add_entity, type})
   end
 
+  def remove_entity(world, entity) when is_pid(world) and is_pid(entity) do
+    GenServer.cast(world, {:remove_entity, entity})
+  end
+
   def pause(world) when is_pid(world) do
     GenServer.cast(world, :pause)
   end
@@ -62,6 +66,11 @@ defmodule ElixirRPG.World do
 
   def handle_cast({:add_system, system}, current_state) do
     {:noreply, %World.Data{current_state | systems: [system | current_state.systems]}}
+  end
+
+  def handle_cast({:remove_entity, entity}, current_state) do
+    Process.exit(entity, 0)
+    {:noreply, current_state}
   end
 
   def handle_cast({:add_entity, entity_type}, current_state) do

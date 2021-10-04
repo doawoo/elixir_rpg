@@ -5,7 +5,7 @@ defentity Cat do
   component Sprite, %{sprite_name: "char/cat/normal.png", base_sprite_dir: "char/cat"}
   component GridPosition, %{index: 7}
 
-  component ActionList, %{actions: [:attack, :flame, :roast]}
+  component ActionList, %{actions: [{:intent, :attack}, {:intent, :flame}, {:intent, :shock}]}
 
   component DemoStats, %{
     hp: 50,
@@ -19,4 +19,6 @@ defentity Cat do
 
   component ActiveBattle
   component AnimationMod
+
+  component Targetable, %{actions_enabled: [:coffee, :black_tea, :green_tea]}
 end

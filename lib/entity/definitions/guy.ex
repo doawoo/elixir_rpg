@@ -19,4 +19,6 @@ defentity Guy do
 
   component ActiveBattle
   component AnimationMod
+
+  component Targetable, %{actions_enabled: [:coffee, :black_tea, :green_tea]}
 end

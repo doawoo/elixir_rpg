@@ -5,7 +5,9 @@ defentity SodaBot do
   component Sprite, %{sprite_name: "char/soda/normal.png", base_sprite_dir: "char/soda"}
   component GridPosition, %{index: 9}
 
-  component ActionList, %{actions: [:coffee, :green_tea, :black_tea]}
+  component ActionList, %{
+    actions: [{:intent, :coffee}, {:intent, :green_tea}, {:intent, :black_tea}]
+  }
 
   component DemoStats, %{
     hp: 25,
@@ -19,4 +21,6 @@ defentity SodaBot do
 
   component ActiveBattle
   component AnimationMod
+
+  component Targetable, %{actions_enabled: [:coffee, :black_tea, :green_tea]}
 end
