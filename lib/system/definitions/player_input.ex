@@ -4,6 +4,8 @@ defsystem PlayerInput do
   require Logger
 
   alias ElixirRPG.Entity
+  alias ElixirRPG.Action
+  alias ElixirRPG.Action.ActionTypes
   alias ElixirRPG.World.Input
 
   name "PlayerInputSystem"
@@ -43,6 +45,7 @@ defsystem PlayerInput do
 
       case action do
         :dance -> do_dance(entity)
+        :attack -> do_attack(entity, input.input_paramters.target)
       end
     end
   end
@@ -50,6 +53,14 @@ defsystem PlayerInput do
   defp do_dance(entity) do
     ElixirRPG.RuntimeSystems.AnimateModSystem.add_animation(entity, "animate__tada", 15.0)
     ElixirRPG.RuntimeSystems.SpecialSpriteSystem.set_sprite_override(entity, "dance.gif", 2.0)
+  end
+
+  defp do_attack(entity, target) do
+    attacker_stats = Entity.get_component(entity, DemoStats)
+    atk_action = ActionTypes.physical_damage(target, attacker_stats.attack_power, false)
+
+    Action.execute(atk_action)
+    Entity.set_component_data(entity, ActiveBattle, :atb_value, 0.0)
   end
 
   defp get_action({:intent, a}), do: a

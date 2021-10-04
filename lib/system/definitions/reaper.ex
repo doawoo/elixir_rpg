@@ -15,7 +15,7 @@ defsystem ReaperSystem do
     dead? = get_component_data(DemoStats, :dead)
 
     if dead? do
-      ElixirRPG.World.remove_entity(entity)
+      ElixirRPG.World.remove_entity(world_name, entity)
     end
   end
 end

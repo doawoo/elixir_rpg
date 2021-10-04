@@ -11,6 +11,8 @@ defcomponent DemoStats do
 
   member :defense, 5
 
+  member :attack_power, 5
+
   member :just_took_damage, false
 
   member :casting, false

@@ -5,7 +5,7 @@ defentity Cat do
   component Sprite, %{sprite_name: "char/cat/normal.png", base_sprite_dir: "char/cat"}
   component GridPosition, %{index: 7}
 
-  component ActionList, %{actions: [{:intent, :attack}, {:intent, :flame}, {:intent, :shock}]}
+  component ActionList, %{actions: [{:intent, :attack}, {:intent, :burn}, :shock]}
 
   component DemoStats, %{
     hp: 50,
