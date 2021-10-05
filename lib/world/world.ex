@@ -21,10 +21,6 @@ defmodule ElixirRPG.World do
     GenServer.cast(world, {:add_entity, type})
   end
 
-  def remove_entity(world, entity) when is_pid(world) and is_pid(entity) do
-    GenServer.cast(world, {:remove_entity, entity})
-  end
-
   def pause(world) when is_pid(world) do
     GenServer.cast(world, :pause)
   end

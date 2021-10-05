@@ -9,13 +9,18 @@ defsystem ReaperSystem do
 
   on_tick do
     _ = delta_time
-    _ = world_name
     _ = frontend_pid
 
     dead? = get_component_data(DemoStats, :dead)
 
     if dead? do
-      ElixirRPG.World.remove_entity(world_name, entity)
+      get_all_components()
+      |> Map.keys()
+      |> Enum.each(fn comp ->
+        ElixirRPG.Entity.EntityStore.remove_entity_from_group(comp, world_name, entity)
+      end)
+
+      ElixirRPG.Entity.EntityStore.add_entity_to_group(:__dead__, world_name, entity)
     end
   end
 end

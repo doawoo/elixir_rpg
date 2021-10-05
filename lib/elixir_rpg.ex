@@ -29,7 +29,8 @@ defmodule ElixirRPG do
         RuntimeSystems.SpecialSpriteSystem,
         RuntimeSystems.DrawingSystem,
         RuntimeSystems.AnimateModSystem,
-        RuntimeSystems.ClearStateSystem
+        RuntimeSystems.ClearStateSystem,
+        RuntimeSystems.ReaperSystem
       ]
       |> Enum.reverse()
 
