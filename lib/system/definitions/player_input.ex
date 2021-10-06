@@ -52,7 +52,7 @@ defsystem PlayerInput do
 
   defp do_dance(entity) do
     ElixirRPG.RuntimeSystems.AnimateModSystem.add_animation(entity, "animate__tada", 15.0)
-    ElixirRPG.RuntimeSystems.SpecialSpriteSystem.set_sprite_override(entity, "dance.gif", 2.0)
+    ElixirRPG.RuntimeSystems.SpecialSpriteSystem.set_sprite_override(entity, "dance.gif", 2.05)
   end
 
   defp do_attack(entity, target) do
