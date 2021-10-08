@@ -2,11 +2,11 @@ use ElixirRPG.DSL.Entity
 
 defentity UFO do
   component DemoStats, %{
-    max_hp: 150,
-    hp: 150,
-    max_mp: 200,
-    mp: 200,
-    speed: 7
+    max_hp: 175,
+    hp: 175,
+    max_mp: 400,
+    mp: 400,
+    speed: 10
   }
 
   component Status

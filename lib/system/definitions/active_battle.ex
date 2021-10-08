@@ -20,9 +20,10 @@ defsystem ActiveBattleSystem do
     current_atb = get_component_data(ActiveBattle, :atb_value)
     frozen = get_component_data(ActiveBattle, :frozen)
     multiplier = get_component_data(ActiveBattle, :multiplier)
+    casting = get_component_data(DemoStats, :casting)
 
-    if current_atb < 1.0 && !frozen do
-      new_atb_value = (current_atb + (speed_stat * multiplier) / 100 * delta_time)
+    if current_atb < 1.0 && !frozen && !casting do
+      new_atb_value = current_atb + speed_stat * multiplier / 100 * delta_time
 
       if new_atb_value >= 1.0 do
         set_component_data(ActiveBattle, :atb_value, 1.0)

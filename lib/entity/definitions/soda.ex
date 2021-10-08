@@ -14,7 +14,8 @@ defentity SodaBot do
     max_hp: 25,
     mp: 40,
     max_mp: 40,
-    speed: 7
+    speed: 7,
+    attack_power: 10
   }
 
   component Status

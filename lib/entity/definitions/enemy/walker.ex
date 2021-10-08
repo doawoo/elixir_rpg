@@ -6,7 +6,7 @@ defentity Walker do
     hp: 50,
     max_mp: 20,
     mp: 20,
-    speed: 20
+    speed: 30
   }
 
   component Status

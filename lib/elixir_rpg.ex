@@ -23,6 +23,7 @@ defmodule ElixirRPG do
       [
         RuntimeSystems.StatusEffectSystem,
         RuntimeSystems.ActiveBattleSystem,
+        RuntimeSystems.CastingSystem,
         RuntimeSystems.PlayerInput,
         RuntimeSystems.NPCBrainSystem,
         RuntimeSystems.CombatSystem,

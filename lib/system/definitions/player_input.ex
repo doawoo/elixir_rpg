@@ -46,6 +46,9 @@ defsystem PlayerInput do
       case action do
         :dance -> do_dance(entity)
         :attack -> do_attack(entity, input.input_paramters.target)
+        :coffee -> do_coffee_cast(entity, input.input_paramters.target)
+        :green_tea -> do_green_tea_cast(entity, input.input_paramters.target)
+        :black_tea -> do_black_tea_cast(entity, input.input_paramters.target)
       end
     end
   end
@@ -60,6 +63,23 @@ defsystem PlayerInput do
     atk_action = ActionTypes.physical_damage(target, attacker_stats.attack_power, false)
 
     Action.execute(atk_action)
+    Entity.set_component_data(entity, ActiveBattle, :atb_value, 0.0)
+  end
+
+  defp do_coffee_cast(entity, target) do
+    casting_delay = 2.0
+    Entity.set_component_data(entity, ActiveBattle, :atb_value, 0.0)
+    Entity.set_component_data(entity, DemoStats, :casting, true)
+    Entity.set_component_data(entity, DemoStats, :casting_target, target)
+    Entity.set_component_data(entity, DemoStats, :casting_data, :coffee_up)
+    Entity.set_component_data(entity, DemoStats, :casting_delay, casting_delay)
+  end
+
+  defp do_green_tea_cast(entity, target) do
+    Entity.set_component_data(entity, ActiveBattle, :atb_value, 0.0)
+  end
+
+  defp do_black_tea_cast(entity, target) do
     Entity.set_component_data(entity, ActiveBattle, :atb_value, 0.0)
   end
 

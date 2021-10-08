@@ -12,7 +12,8 @@ defentity Cat do
     max_hp: 50,
     mp: 30,
     max_mp: 30,
-    speed: 12
+    speed: 12,
+    attack_power: 30
   }
 
   component Status

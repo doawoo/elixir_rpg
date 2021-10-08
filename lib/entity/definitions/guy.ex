@@ -12,10 +12,11 @@ defentity Guy do
     max_hp: 10,
     mp: 5,
     max_mp: 5,
-    speed: 15
+    speed: 15,
+    attack_power: 2
   }
 
-  component Status, %{to_be_added: [{:coffee_up, 0.0}]}
+  component Status
 
   component ActiveBattle
   component AnimationMod
