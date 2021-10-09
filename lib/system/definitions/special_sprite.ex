@@ -3,10 +3,9 @@ use ElixirRPG.DSL.System
 defsystem SpecialSpriteSystem do
   require Logger
 
-  @sprite_override_hit "hit.png"
   @sprite_override_ready "ready.png"
-  @sprite_override_low_hp "hit.png"
-  @sprite_override_low_hp_ready "low.png"
+  @sprite_override_low_hp "hurt.png"
+  @sprite_override_low_hp_ready "low_ready.png"
   @sprite_override_casting "cast.png"
 
   name "SpecialSprites"
@@ -39,8 +38,8 @@ defsystem SpecialSpriteSystem do
       cond do
         casting -> set_sprite_override(entity, @sprite_override_casting, 0.5)
         ready && low_health -> set_sprite_override(entity, @sprite_override_low_hp_ready)
-        low_health -> set_sprite_override(entity, @sprite_override_low_hp)
         ready -> set_sprite_override(entity, @sprite_override_ready)
+        low_health -> set_sprite_override(entity, @sprite_override_low_hp)
         true -> set_sprite_override(entity, "")
       end
     end

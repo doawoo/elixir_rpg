@@ -7,6 +7,7 @@ defsystem CombatSystem do
   alias ElixirRPG.Entity
   alias ElixirRPG.Action
 
+  alias ElixirRPG.RuntimeSystems.StatusEffectSystem
   alias ElixirRPG.RuntimeSystems.AnimateModSystem
 
   name "CombatSystem"
@@ -55,6 +56,22 @@ defsystem CombatSystem do
       _ ->
         nil
     end
+  end
+
+  defp process_action(entity, %Action{action_type: :healing, payload: payload}) do
+    current_stats = Entity.get_component(entity, DemoStats)
+    new_hp = min(current_stats.max_hp, current_stats.hp + payload.amount)
+    Entity.set_component_data(entity, DemoStats, :hp, new_hp)
+  end
+
+  defp process_action(entity, %Action{action_type: :restore_mp, payload: payload}) do
+    current_stats = Entity.get_component(entity, DemoStats)
+    new_hp = min(current_stats.max_mp, current_stats.mp + payload.amount)
+    Entity.set_component_data(entity, DemoStats, :mp, new_hp)
+  end
+
+  defp process_action(entity, %Action{payload: %{effect: effect}}) do
+    StatusEffectSystem.add_status_to_entity(entity, effect)
   end
 
   defp process_action(entity_pid, %Action{} = unknown_action) do

@@ -68,19 +68,32 @@ defsystem PlayerInput do
 
   defp do_coffee_cast(entity, target) do
     casting_delay = 2.0
+    coffee_action = ActionTypes.give_status(target, :coffee_up)
+
     Entity.set_component_data(entity, ActiveBattle, :atb_value, 0.0)
     Entity.set_component_data(entity, DemoStats, :casting, true)
-    Entity.set_component_data(entity, DemoStats, :casting_target, target)
-    Entity.set_component_data(entity, DemoStats, :casting_data, :coffee_up)
+    Entity.set_component_data(entity, DemoStats, :casting_data, coffee_action)
     Entity.set_component_data(entity, DemoStats, :casting_delay, casting_delay)
   end
 
   defp do_green_tea_cast(entity, target) do
     Entity.set_component_data(entity, ActiveBattle, :atb_value, 0.0)
+
+    casting_delay = 3.0
+    mp_action = ActionTypes.restore_mp(target, 15)
+    Entity.set_component_data(entity, DemoStats, :casting, true)
+    Entity.set_component_data(entity, DemoStats, :casting_data, mp_action)
+    Entity.set_component_data(entity, DemoStats, :casting_delay, casting_delay)
   end
 
   defp do_black_tea_cast(entity, target) do
     Entity.set_component_data(entity, ActiveBattle, :atb_value, 0.0)
+
+    casting_delay = 3.0
+    heal_action = ActionTypes.heal(target, 15)
+    Entity.set_component_data(entity, DemoStats, :casting, true)
+    Entity.set_component_data(entity, DemoStats, :casting_data, heal_action)
+    Entity.set_component_data(entity, DemoStats, :casting_delay, casting_delay)
   end
 
   defp get_action({:intent, a}), do: a

@@ -16,7 +16,6 @@ defcomponent DemoStats do
   member :just_took_damage, false
 
   member :casting, false
-  member :casting_target, nil
   member :casting_data, nil
   member :casting_delay, 0.0
 

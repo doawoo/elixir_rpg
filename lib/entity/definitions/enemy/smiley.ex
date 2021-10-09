@@ -6,7 +6,7 @@ defentity Smiley do
     hp: 20,
     max_mp: 200,
     mp: 200,
-    speed: 5
+    speed: 4
   }
 
   component Status
@@ -21,4 +21,6 @@ defentity Smiley do
   component AnimationMod
 
   component Targetable, %{actions_enabled: [:shock, :burn, :attack]}
+
+  component Enemy
 end

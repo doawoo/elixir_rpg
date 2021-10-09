@@ -10,12 +10,15 @@ defmodule ElixirRPG.Action.ActionTypes do
     Action.make_action(:dmg_magic, target, %{power: power, element: element})
   end
 
-  # Inflict Status
-  def inflict_poison(target, turns \\ 3) do
-    Action.make_action(:status_poison, target, %{turns: turns})
+  def heal(target, amount) do
+    Action.make_action(:healing, target, %{amount: amount})
   end
 
-  def inflict_sleep(target, turns \\ 3) do
-    Action.make_action(:status_sleep, target, %{turns: turns})
+  def restore_mp(target, amount) do
+    Action.make_action(:restore_mp, target, %{amount: amount})
+  end
+
+  def give_status(target, effect) do
+    Action.make_action(:give_status, target, %{effect: effect})
   end
 end
