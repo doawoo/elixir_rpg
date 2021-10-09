@@ -2,11 +2,11 @@ use ElixirRPG.DSL.Entity
 
 defentity Walker do
   component DemoStats, %{
-    max_hp: 50,
-    hp: 50,
+    max_hp: 10,
+    hp: 10,
     max_mp: 20,
     mp: 20,
-    speed: 30
+    speed: 40
   }
 
   component Status

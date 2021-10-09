@@ -42,6 +42,27 @@ defmodule ElixirRPG.StatusEffects do
   end
 
   @doc """
+  Freezes the ATB guage of the entity for 3.5 sec
+  """
+  def shock do
+    %StatusEffects{
+      interval: -1.0,
+      max_duration: 3.5,
+      on_inflict: nil,
+      on_applied: fn entity ->
+        Entity.set_component_data(entity, ActiveBattle, :frozen, true)
+
+        inflict_dmg = 8.0
+        curr_hp = Entity.get_component(entity, DemoStats).hp
+        Entity.set_component_data(entity, DemoStats, :hp, curr_hp - inflict_dmg)
+      end,
+      on_removed: fn entity ->
+        Entity.set_component_data(entity, ActiveBattle, :frozen, false)
+      end
+      }
+  end
+
+  @doc """
   Boosts the speed of the ATB bar by 50%
   """
   def coffee_up do

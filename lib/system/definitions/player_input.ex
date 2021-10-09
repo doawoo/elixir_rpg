@@ -29,13 +29,13 @@ defsystem PlayerInput do
       input = input_map[entity]
       ElixirRPG.clear_input(world_name, entity)
       Logger.info("Consume input from #{inspect(entity)} -- #{inspect(input)}")
-      process_input(input, entity)
+      process_input(input, world_name, entity)
     else
       _ -> :ok
     end
   end
 
-  defp process_input(%Input{} = input, entity) do
+  defp process_input(%Input{} = input, world_name, entity) do
     action_list = Entity.get_component(entity, ActionList).actions |> Enum.map(&get_action/1)
     action = input.input_paramters.action_name |> String.to_existing_atom()
 
@@ -45,6 +45,8 @@ defsystem PlayerInput do
 
       case action do
         :dance -> do_dance(entity)
+        :shock -> do_shock(entity, world_name)
+        :burn -> do_burn(entity, input.input_paramters.target)
         :attack -> do_attack(entity, input.input_paramters.target)
         :coffee -> do_coffee_cast(entity, input.input_paramters.target)
         :green_tea -> do_green_tea_cast(entity, input.input_paramters.target)
@@ -66,9 +68,34 @@ defsystem PlayerInput do
     Entity.set_component_data(entity, ActiveBattle, :atb_value, 0.0)
   end
 
-  defp do_shock(entity, _target) do
-    # TODO
-    # Get all enemies in the world, freeze them
+  defp do_shock(entity, world_name) do
+    required_mp = 12
+    current_mp = Entity.get_component(entity, DemoStats).mp
+
+    if Entity.get_component(entity, DemoStats).mp >= required_mp do
+      enemies = ElixirRPG.Entity.EntityStore.get_entities_with([Enemy], world_name)
+      Enum.each(enemies, fn e ->
+        ActionTypes.give_status(e, :shock) |> Action.execute()
+      end)
+      Entity.set_component_data(entity, DemoStats, :mp, current_mp - required_mp)
+    end
+  end
+
+  defp do_burn(entity, target) do
+    required_mp = 12
+    current_mp = Entity.get_component(entity, DemoStats).mp
+
+    if Entity.get_component(entity, DemoStats).mp >= required_mp do
+      casting_delay = 2.0
+      burn_action = ActionTypes.give_status(target, :burn)
+
+      Entity.set_component_data(entity, ActiveBattle, :atb_value, 0.0)
+      Entity.set_component_data(entity, DemoStats, :casting, true)
+      Entity.set_component_data(entity, DemoStats, :casting_data, burn_action)
+      Entity.set_component_data(entity, DemoStats, :casting_delay, casting_delay)
+
+      Entity.set_component_data(entity, DemoStats, :mp, current_mp - required_mp)
+    end
   end
 
   defp do_coffee_cast(entity, target) do
