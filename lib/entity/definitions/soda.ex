@@ -12,8 +12,8 @@ defentity SodaBot do
   component DemoStats, %{
     hp: 25,
     max_hp: 25,
-    mp: 40,
-    max_mp: 40,
+    mp: 50,
+    max_mp: 50,
     speed: 7,
     attack_power: 10
   }

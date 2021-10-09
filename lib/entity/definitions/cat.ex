@@ -8,9 +8,9 @@ defentity Cat do
   component ActionList, %{actions: [{:intent, :attack}, {:intent, :burn}, :shock]}
 
   component DemoStats, %{
-    hp: 1,
+    hp: 50,
     max_hp: 50,
-    mp: 0,
+    mp: 30,
     max_mp: 30,
     speed: 12,
     attack_power: 30
