@@ -12,8 +12,9 @@ defsystem ReaperSystem do
     _ = frontend_pid
 
     dead? = get_component_data(DemoStats, :dead)
+    hp_neg? = get_component_data(DemoStats, :hp) <= 0
 
-    if dead? do
+    if dead? || hp_neg? do
       get_all_components()
       |> Map.keys()
       |> Enum.each(fn comp ->
