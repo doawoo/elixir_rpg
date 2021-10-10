@@ -28,7 +28,6 @@ defsystem StatusEffectSystem do
     new_status_list =
       current_status_list
       |> Enum.map(fn {type, time_applied, total_time} ->
-        IO.inspect({type, time_applied, total_time})
         {type, time_applied + delta_time, total_time + delta_time}
       end)
       |> Enum.map(fn {type, time_applied, total_time} -> apply_status(entity, type, time_applied, total_time) end)

@@ -71,11 +71,13 @@ defsystem NPCBrainSystem do
     alias ElixirRPG.Action
     alias ElixirRPG.Action.ActionTypes
     alias ElixirRPG.Entity.EntityStore
+    alias ElixirRPG.Entity
 
     # Make the linter be quiet
     _ = Action
     _ = ActionTypes
     _ = EntityStore
+    _ = Entity
 
     __ENV__
   end

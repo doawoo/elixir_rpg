@@ -6,7 +6,7 @@ defentity Smiley do
     hp: 20,
     max_mp: 200,
     mp: 200,
-    speed: 4
+    speed: 10
   }
 
   component Status

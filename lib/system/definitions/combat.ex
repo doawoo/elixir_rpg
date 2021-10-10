@@ -17,19 +17,18 @@ defsystem CombatSystem do
   wants AnimationMod
 
   on_tick do
-    _ = world_name
     _ = frontend_pid
     _ = delta_time
     # name = get_component_data(ActorName, :name)
 
     # pop actions from the queue and process them until we run out
     first_action = Entity.pop_action(entity)
-    process_action(entity, first_action)
+    process_action(entity, first_action, world_name)
   end
 
-  defp process_action(_entity_pid, :empty), do: :ok
+  defp process_action(_entity_pid, :empty, _world_name), do: :ok
 
-  defp process_action(entity_pid, %Action{action_type: :dmg_phys} = action) do
+  defp process_action(entity_pid, %Action{action_type: :dmg_phys} = action, _world_name) do
     case Entity.get_component(entity_pid, DemoStats) do
       %ComponentTypes.DemoStats{} = stats ->
         dmg_delt = action.payload.power
@@ -58,23 +57,29 @@ defsystem CombatSystem do
     end
   end
 
-  defp process_action(entity, %Action{action_type: :healing, payload: payload}) do
+  defp process_action(entity, %Action{action_type: :healing, payload: payload}, _world_name) do
     current_stats = Entity.get_component(entity, DemoStats)
     new_hp = min(current_stats.max_hp, current_stats.hp + payload.amount)
     Entity.set_component_data(entity, DemoStats, :hp, new_hp)
   end
 
-  defp process_action(entity, %Action{action_type: :restore_mp, payload: payload}) do
+  defp process_action(entity, %Action{action_type: :restore_mp, payload: payload}, _world_name) do
     current_stats = Entity.get_component(entity, DemoStats)
     new_hp = min(current_stats.max_mp, current_stats.mp + payload.amount)
     Entity.set_component_data(entity, DemoStats, :mp, new_hp)
   end
 
-  defp process_action(entity, %Action{payload: %{effect: effect}}) do
+  defp process_action(entity, %Action{action_type: :give_status, payload: %{effect: effect}}, _world_name) do
     StatusEffectSystem.add_status_to_entity(entity, effect)
   end
 
-  defp process_action(entity_pid, %Action{} = unknown_action) do
+  defp process_action(_entity, %Action{action_type: :spawn, payload: %{set: {spawn1, spawn2}}}, world_name) do
+    world = Process.whereis(world_name)
+    ElixirRPG.World.add_entity(world, spawn1);
+    ElixirRPG.World.add_entity(world, spawn2);
+  end
+
+  defp process_action(entity_pid, %Action{} = unknown_action, _world_name) do
     Logger.warn("Unknown action: #{inspect(entity_pid)} #{inspect(unknown_action)}")
   end
 end

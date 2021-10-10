@@ -21,6 +21,7 @@ defmodule ElixirRPG do
     # Now add systems
     systems =
       [
+        RuntimeSystems.ReaperSystem,
         RuntimeSystems.StatusEffectSystem,
         RuntimeSystems.ActiveBattleSystem,
         RuntimeSystems.CastingSystem,
@@ -31,7 +32,6 @@ defmodule ElixirRPG do
         RuntimeSystems.DrawingSystem,
         RuntimeSystems.AnimateModSystem,
         RuntimeSystems.ClearStateSystem,
-        RuntimeSystems.ReaperSystem
       ]
       |> Enum.reverse()
 

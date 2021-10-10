@@ -6,7 +6,7 @@ defentity Frowny do
     hp: 20,
     max_mp: 200,
     mp: 200,
-    speed: 5
+    speed: 9
   }
 
   component Status

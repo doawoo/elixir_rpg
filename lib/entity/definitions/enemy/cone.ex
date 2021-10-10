@@ -3,7 +3,7 @@ use ElixirRPG.DSL.Entity
 defentity Cone do
   component DemoStats, %{
     max_hp: 45,
-    hp: 45,
+    hp: 1,
     max_mp: 183,
     mp: 183,
     speed: 5

@@ -21,6 +21,7 @@ defsystem ReaperSystem do
       end)
 
       ElixirRPG.Entity.EntityStore.add_entity_to_group(:__dead__, world_name, entity)
+      GenServer.call(entity, :destroy)
     end
   end
 end

@@ -110,6 +110,10 @@ defmodule ElixirRPG.Entity do
     end
   end
 
+  def handle_call(:destroy, _from, state) do
+    {:stop, :normal, :ok, state}
+  end
+
   # Catch-all Call because sometimes it helps :D
 
   def handle_call(unknown_message, from, entity_data) do
