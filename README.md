@@ -1,21 +1,11 @@
-# ElixirRpg
+# Elixir RPG ECS Experiment
 
-**TODO: Add description**
+Welcome to the ECS/Engine portion of the code seen in my ElixirConf 2021 Talk "Game Programming Patterns In Elixir?"
 
-## Installation
+This code is very much: hacky, prototype quality, and probably full of bad ideas.
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `elixir_rpg` to your list of dependencies in `mix.exs`:
+But if it gives you any cool ideas that are useful in your own projects, then I'm glad! :)
 
-```elixir
-def deps do
-  [
-    {:elixir_rpg, "~> 0.1.0"}
-  ]
-end
-```
+## The Talk
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/elixir_rpg](https://hexdocs.pm/elixir_rpg).
-
+[![ElixirConf 2021 Youtube Link](https://img.youtube.com/vi/gQb58bqwDOc/0.jpg)](https://www.youtube.com/watch?v=gQb58bqwDOc)
